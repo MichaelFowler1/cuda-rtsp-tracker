@@ -1,6 +1,12 @@
-# Secrets
+# Private Info
 .env
 
-# Python artifacts
+# Large AI Models
+*.pt
+
+# Test Data/Images
+bus.jpg
+
+# Python junk
 __pycache__/
 *.pyc
