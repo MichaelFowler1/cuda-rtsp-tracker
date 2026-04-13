@@ -1,5 +1,5 @@
 # Virtual AI Tracker Node
-
+![Visual verification showing bounding boxes, segmentation masks, and confidence scores for person, keyboard, mouse, and tv.](image.png)
 This is a high-performance computer vision pipeline I built to turn a standard smartphone into a localized AI tracking node. This project is a proof of concept designed to test and refine tracking logic before it is applied to a Eufy security camera system and, eventually, an autonomous drone project further down the line.
 
 The system streams live video from a mobile device over a local Wi-Fi network to a PC. A hardware-accelerated YOLO model handles real-time object detection and tracking locally. I built this for local networks specifically to ensure near-zero latency and total data privacy by keeping the processing off the cloud.
