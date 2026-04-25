@@ -1,3 +1,4 @@
+RTX 3080 High-Throughput Vision
 This is a high-performance computer vision pipeline built to turn a standard smartphone into a localized AI tracking node. This project is a proof of concept designed to test and refine tracking and identification logic before it is applied to a Eufy security camera system and, eventually, an autonomous drone project further down the line.
 
 The system streams live video from a mobile device over a local Wi-Fi network to a PC. A dual-model approach handles real-time detection: a hardware-accelerated YOLOv8 model for general object tracking and a FaceNet pipeline for specific human identification. I built this for local networks specifically to ensure near-zero latency and total data privacy by keeping all processing off the cloud.
