@@ -12,13 +12,19 @@ load_dotenv()
 camera_url_env = os.getenv("CAMERA_URL", "0")
 URL = int(camera_url_env) if camera_url_env.isdigit() else camera_url_env
 
-MODEL_NAME = "yolov8m.pt" 
+MODEL_NAME = "yolov8l.pt"
 
 class HighThroughputVision:
     def __init__(self, src):
         self.cap = cv2.VideoCapture(src)
+        
+        # Force 1080p resolution for better clarity and detection accuracy
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+        
         # Minimize buffer size to reduce latency
         self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 2)
+        
         self.frame = None
         self.stopped = False
         
@@ -51,11 +57,10 @@ class HighThroughputVision:
                     source=self.frame,
                     device="cuda",
                     persist=True,
-                    imgsz=640,
-                    conf=0.3,      # Confidence threshold
+                    imgsz=1088,
+                    conf=0.7,
                     iou=0.5,
                     max_det=40,    # Limit detections per frame to prevent rendering lag
-                    classes=[0, 2, 3, 5, 7], # Filter by specific COCO classes
                     half=True,
                     stream=True,   
                     verbose=False
