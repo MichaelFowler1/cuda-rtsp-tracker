@@ -1,57 +1,83 @@
-# Virtual AI Tracker Node
-![Visual verification showing bounding boxes, segmentation masks, and confidence scores for person, keyboard, mouse, and tv.](image.png)
-This is a high-performance computer vision pipeline I built to turn a standard smartphone into a localized AI tracking node. This project is a proof of concept designed to test and refine tracking logic before it is applied to a Eufy security camera system and, eventually, an autonomous drone project further down the line.
+This is a high-performance computer vision pipeline built to turn a standard smartphone into a localized AI tracking node. This project is a proof of concept designed to test and refine tracking and identification logic before it is applied to a Eufy security camera system and, eventually, an autonomous drone project further down the line.
 
-The system streams live video from a mobile device over a local Wi-Fi network to a PC. A hardware-accelerated YOLO model handles real-time object detection and tracking locally. I built this for local networks specifically to ensure near-zero latency and total data privacy by keeping the processing off the cloud.
+The system streams live video from a mobile device over a local Wi-Fi network to a PC. A dual-model approach handles real-time detection: a hardware-accelerated YOLOv8 model for general object tracking and a FaceNet pipeline for specific human identification. I built this for local networks specifically to ensure near-zero latency and total data privacy by keeping all processing off the cloud.
 
-## Project Roadmap
-* Phase 1 (Current): Proof of concept using mobile hardware as a wireless IP node.
-* Phase 2 (Planned): Integration with Eufy S330 hardware via local RTSP streaming.
-* Phase 3 (Planned): Deployment of optimized tracking logic to an autonomous drone system.
+Project Roadmap
+Phase 1 (Current): Proof of concept using mobile hardware as a wireless IP node with integrated Facial Recognition.
 
-## Key Features
-* Mobile-to-PC Streaming: Uses mobile hardware as a wireless IP camera to test tracking algorithms.
-* Hardware-Accelerated AI: Utilizes PyTorch and NVIDIA CUDA to run inference on a local GPU.
-* Zero-Cloud Architecture: 100 percent of the processing stays on the local machine.
-* Secure Environment Configuration: Decouples network credentials from the codebase using .env files for better security practices.
+Phase 2 (Planned): Integration with Eufy S330 hardware via local RTSP streaming.
 
-## Tech Stack
-* Language: Python 3
-* Vision and AI: OpenCV, Ultralytics YOLOv8
-* Network: Local WLAN (HTTP/RTSP protocol)
-* Environment: python-dotenv
+Phase 3 (Planned): Deployment of optimized tracking logic to an autonomous drone system.
 
-## Step 1: Phone App Setup (The Camera Node)
+Key Features
+Mobile-to-PC Streaming: Uses mobile hardware as a wireless IP camera to test tracking algorithms.
+
+Localized Facial Recognition: Identify authorized individuals vs. "Unknown" entities using Euclidean distance matching.
+
+Hardware-Accelerated AI: Utilizes PyTorch and NVIDIA CUDA to run inference on a local RTX 3080 GPU.
+
+Zero-Cloud Architecture: 100 percent of the processing stays on the local machine.
+
+Secure Environment Configuration: Decouples network credentials and hardware paths from the codebase using .env files.
+
+Tech Stack
+Language: Python 3.12
+
+Vision and AI: OpenCV, Ultralytics YOLOv8, FaceNet (MTCNN & InceptionResnetV1)
+
+Network: Local WLAN (HTTP/RTSP protocol)
+
+Environment: python-dotenv, PyTorch (CUDA 12.1)
+
+Step 1: Phone App Setup (The Camera Node)
 To send the video feed from your phone to your PC, you need an app that broadcasts your camera over your local Wi-Fi.
 
-1. Download DroidCam (available on iOS and Android). IP Webcam for Android is another solid alternative.
-2. Connect your phone to the same Wi-Fi network as your PC.
-3. Open the app and find the Wi-Fi IP Address and Port (for example, http://10.0.0.149:4747).
-4. Keep the app open so the phone continues to broadcast the stream.
+Download DroidCam (available on iOS and Android).
 
-## Step 2: PC Setup (The AI Brain)
-1. Clone the repository:
-   git clone https://github.com/BennyDogfish/cuda-rtsp-tracker.git
-   cd cuda-rtsp-tracker
+Connect your phone to the same Wi-Fi network as your PC.
 
-2. Install the required Python libraries:
-   pip install opencv-python ultralytics python-dotenv
-   
-   Note: For the best performance, make sure you have the version of PyTorch that matches your specific GPU and CUDA toolkit.
+Open the app and find the Wi-Fi IP Address and Port (e.g., http://10.0.0.149:4747).
 
-## Step 3: Network Configuration
-I used .env files here so that network IP addresses aren't hardcoded into the script.
+Keep the app open so the phone continues to broadcast the stream.
 
-1. In the main project folder, create a new file named exactly .env
-2. Open the .env file and add the URL from your phone app, adding /video to the end of it. It should look like this:
-   CAMERA_URL="http://10.0.0.149:4747/video"
-3. Save the file. The .gitignore is already set up to make sure this file never gets pushed to GitHub.
+Step 2: PC Setup (The AI Brain)
+Clone the repository:
 
-## Step 4: Run the Tracker
-Once the app is running and your .env file is set up, run the script:
+Bash
+git clone https://github.com/BennyDogfish/cuda-rtsp-tracker.git
+cd cuda-rtsp-tracker
+Install the 3080-Optimized environment:
+To ensure the RTX 3080 handles the dual-AI load correctly, install the dependencies in this specific order:
 
-   python virtual_tracker.py
+Bash
+# 1. Install GPU-Optimized Torch
+pip install torch==2.5.1+cu121 torchvision==0.20.1+cu121 --index-url https://download.pytorch.org/whl/cu121
 
+# 2. Install AI Models (using --no-deps to prevent version conflicts)
+pip install ultralytics facenet-pytorch --no-deps
+
+# 3. Install Supporting Libraries
+pip install "numpy<2.0.0" "Pillow<10.3.0" python-dotenv opencv-python
+Step 3: Configuration (Network & Faces)
+This project uses .env files and local directories to separate private data from the logic.
+
+Network: Create a file named .env in the main folder and add your phone's URL:
+
+Plaintext
+CAMERA_URL="http://10.0.0.149:4747/video"
+Authorized Faces: Create a folder named known_faces. Drop a .jpg or .png of any person you want the AI to recognize. Name the file after the person (e.g., steve.jpg).
+
+Step 4: Run the Tracker
+This project is modular. You can run the general object tracker or the specific face identification node independently.
+
+To run Object Tracking (YOLOv8):
+
+Bash
+python virtual_tracker.py
+To run Facial Recognition (FaceNet):
+
+Bash
+python face_tracker.py
 Controls:
-* The AI tracking window will open once the connection is established.
-* Press the 'q' key while the window is active to shut down the pipeline and close the connection.
+
+Press the 'q' key while the window is active to shut down the pipeline and close the connection.

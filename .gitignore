@@ -1,12 +1,5 @@
-# Private Info
 .env
-
-# Large AI Models
-*.pt
-
-# Test Data/Images
-bus.jpg
-
-# Python junk
+.venv/
 __pycache__/
-*.pyc
+known_faces/*
+!known_faces/.gitkeep
