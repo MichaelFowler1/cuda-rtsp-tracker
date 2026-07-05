@@ -4,6 +4,10 @@ This is a high-performance computer vision pipeline built to turn a standard sma
 
 The system streams live video from a mobile device over a local Wi-Fi network to a PC. A dual-model approach handles real-time detection: a hardware-accelerated YOLOv8 model for general object tracking and a FaceNet pipeline for specific human identification. I built this for local networks specifically to ensure near-zero latency and total data privacy by keeping all processing off the cloud.
 
+![CUDA RTSP Tracker: YOLOv8 detection + FaceNet identity](docs/hero.png)
+
+*Left: real YOLOv8-L output on CUDA (bundled `bus.jpg`). Right: the FaceNet identity stage — MTCNN + InceptionResnetV1 embeddings matched by Euclidean distance against a 0.8 threshold (schematic; no reference photo shown). Regenerate with `python make_hero.py`.*
+
 Project Roadmap
 Phase 1 (Current): Proof of concept using mobile hardware as a wireless IP node with integrated Facial Recognition.
 
