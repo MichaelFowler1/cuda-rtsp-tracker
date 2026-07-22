@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "cuda-rtsp-tracker"
+abstract: "Multi-threaded Python application utilizing an RTX 3080 for zero-latency, local AI monitoring of IP cameras."
+authors:
+  - family-names: "Fowler"
+    given-names: "Michael"
+    alias: "MichaelFowler1"
+repository-code: "https://github.com/MichaelFowler1/cuda-rtsp-tracker"
+url: "https://github.com/MichaelFowler1/cuda-rtsp-tracker"
+license: "Apache-2.0"
+date-released: "2026-04-11"
