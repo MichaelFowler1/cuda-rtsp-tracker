@@ -9,5 +9,5 @@ authors:
     alias: "MichaelFowler1"
 repository-code: "https://github.com/MichaelFowler1/cuda-rtsp-tracker"
 url: "https://github.com/MichaelFowler1/cuda-rtsp-tracker"
-license: "Apache-2.0"
+license: "AGPL-3.0"
 date-released: "2026-04-11"
