@@ -1,0 +1,10 @@
+--extra-index-url https://download.pytorch.org/whl/cu121
+# Pinned from the project's .venv (CUDA 12.1 torch build).
+facenet-pytorch==2.6.0
+matplotlib==3.10.8
+numpy==1.26.4
+opencv-python==4.13.0.92
+pillow==10.2.0
+python-dotenv==1.2.2
+torch==2.5.1+cu121
+ultralytics==8.4.37
