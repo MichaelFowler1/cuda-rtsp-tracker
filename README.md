@@ -34,3 +34,13 @@ Vision and AI: OpenCV, Ultralytics YOLOv8, FaceNet (MTCNN & InceptionResnetV1)
 Network: Local WLAN (HTTP/RTSP protocol)
 
 Environment: python-dotenv, PyTorch (CUDA 12.1)
+
+## License
+
+Licensed under the **GNU Affero General Public License v3.0** (AGPL-3.0).
+See [LICENSE](LICENSE).
+
+This project depends on [Ultralytics](https://github.com/ultralytics/ultralytics)
+YOLO, which is AGPL-3.0 licensed. AGPL-3.0 is therefore used here for license
+compatibility. If you deploy a modified version of this software over a network,
+AGPL-3.0 section 13 requires that you offer the corresponding source to its users.
